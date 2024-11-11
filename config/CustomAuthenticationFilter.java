@@ -21,6 +21,11 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
     if(StringUtils.isBlank(member.getUserId()){
       throw new IllegalStateException("UserId is Not Empty");
     }
+
+    if(StringUtils.isBlank(member.getPassword()){
+      throw new IllegalStateException("Password is Not Empty");
+    }
+    
     try{
       // 토큰 생성
       CustomAuthenticationToken token = new CustomAuthenticationToken(member.getUserId(), member.getPassword());
