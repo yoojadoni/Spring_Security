@@ -15,8 +15,18 @@ public class CustomAuthenticationProvider implements AuthenticationProvider{
 
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-    String userId = authentication.getName();
-    String password = 
+    String userId   = authentication.getName();
+    String password = (String) authentication.getCredentials();
+    // (DB) 유저 정보 조회
+    CustomUserDetail customUserDetail = (CustomUserDetail) userDetailsService.loadUserByUsername(loginId);
+    if(customUserDetail == null){
+       throw new CustomAuthenticationException("401", "User Not Exists");
+    }
+    // 비밀번호 검증
+    if(!passwordEncoder.passwordEncoder().matches(password, customUserDetial.getPassword())){
+      throw new CustomAuthenticationException("401", "Invalid password!");
+    }
+    return new CustomAuthenticationToken(customUserDetail, null, customUserDetail.getAuthorities());
   }
   
 }
