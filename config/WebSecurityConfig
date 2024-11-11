@@ -1,4 +1,3 @@
-import config/AuthenticationConfiguration;
 import config/handler/CustomAuthenticationSuccessHandler;
 import config/handler/CustomAuthenticationFailureHanlder;
 import config/handler/customAccessDeniedHandler;
