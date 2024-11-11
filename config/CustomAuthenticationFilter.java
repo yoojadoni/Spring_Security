@@ -23,7 +23,7 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
     }
     try{
       // 토큰 생성
-      CustomAuthenticationToken token = new CustomAuthenticationToken(member.getUserId());
+      CustomAuthenticationToken token = new CustomAuthenticationToken(member.getUserId(), member.getPassword());
       /* token에 더 필요한 데이터가 있는 경우 사용
       AuthenticationDetails details = new AuthenticationDetails();
       details.setUserIp("127.0.0.1");
