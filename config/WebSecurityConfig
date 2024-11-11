@@ -1,3 +1,11 @@
+import config/AuthenticationConfiguration;
+import config/handler/CustomAuthenticationSuccessHandler;
+import config/handler/CustomAuthenticationFailureHanlder;
+import config/handler/customAccessDeniedHandler;
+import config/CustomLoginAuthenticatonEntryPoint;
+import config/CustomPasswordEncoder;
+import config/SessionAuthFilter;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -32,4 +40,33 @@ public class WebSecurityConfig {
     ;
     return http.build();
   }
+
+  // 비밀번호 암호화
+  @Bean
+  public PasswordEncoder passwordEncoder(){
+    return CustomPasswordEncoder.passwordEncoder();
+  }
+
+  @Bean
+  public AuthenticationManager authenticationManager() throws Exception {
+    return authenticationConfiguration.getAuthenticationManager();
+  }
+
+  @Bean
+  public CustomAuthenticationFilter customAuthenticationFilter() throws Exception {
+    CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter();
+    customAuthenticationFilter.setAuthenticationManager(authenticationManager());
+    customAuthenticationFilter.setAuthenticationSuccessHandler(customAuthenticationSuccessHandler);
+    customAuthenticationFilter.setAuthenticationFailureHandler(customAuthenticationFailureHanlder);
+    customAuthenticationFilter.setSecurityContextRepository(
+        new DelegatingSecurityContextRespository(
+          new RequestAttributeSecurityContextRepository()
+          , new HttpSessionSecurityContextRepository()
+      )
+    );
+
+    return customAuthenticationFilter;
+  }
+
+
 }
