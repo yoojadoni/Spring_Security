@@ -1,4 +1,4 @@
-# Spring_Security
+# Spring boot 3.2.6 버전에서의 Spring_Security 세팅의 예시
 
 * AuthenticationEntryPoint
 인증이 안된 익명의 사용자가 인증이 필요한 엔드포인트로 접근하게 된다면 Spring Security의 기본 설정으로는 HttpStatus 401과 함께 스프링의 기본 오류페이지를 보여준다.
